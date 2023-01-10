@@ -1,0 +1,114 @@
+import pandas as pd
+import random
+
+deck=[11,2,3,4,5,6,7,8,9,10,10,10,10,11,2,3,4,5,6,7,8,9,10,10,10,10,11,2,3,4,5,6,7,8,9,10,10,10,10,11,2,3,4,5,6,7,8,9,10,10,10,10]
+deck1=deck
+deck2=deck
+deck3=deck
+deck4=deck
+deck5=deck
+decka=deck+deck1+deck2+deck3+deck4+deck5
+len(decka)
+
+random.shuffle(decka)
+
+def play_round():
+    
+    #dealer up card
+    fu=decka.pop(0)
+    print("dealer draws his up card:",fu)
+    #player card
+    pc1=decka.pop(0)
+    print("dealer draws player card:",pc1)
+    # dealer face down card
+    fd=decka.pop(0)
+    print("dealer draws his face down card")
+    # player 2nd card
+    pc2=decka.pop(0)
+    print("dealer draws player 2nd card:",pc2)
+    
+    decision = input("Enter 1 for hit or 0 for stand:")
+
+
+    pc3=0
+
+    if decision=="1":
+        pc3=decka.pop(0)
+        print("player draws 3rd card:",pc3)
+    
+    player_total=pc1+pc2+pc3
+    print("your total is:",player_total)
+
+    if (pc1==11 or pc2==11 or pc3==11) and player_total>21:
+        print("11 needs to be counted as 1 since 11 busts")
+        if pc1==11:
+            pc1=1
+        if pc2==11:
+            pc2=1
+        if pc3==11:
+           pc3=1
+        
+        player_total=pc1+pc2+pc3
+        print("new player total is:",player_total)
+        
+    # hit again or stand if not bust
+
+    if player_total<21 and decision=="1":
+        decision = input("Enter 1 for hit or 0 for stand:")
+        if decision=="1":
+            pc4=decka.pop(0)
+        
+            print("dealer draws player 4th card:",pc4)
+            player_total=player_total+pc4
+            print("your total is:",player_total)
+    
+        if (pc1==11 or pc2==11 or pc3==11) and player_total>21:
+            print("11 needs to be counted as 1 since 11 busts")
+            if pc1==11:
+                pc1=1
+            if pc2==11:
+                pc2=1
+            if pc3==11:
+                pc3=1
+        
+            player_total=pc1+pc2+pc3
+            print("new player total is:",player_total)
+            
+            
+    #dealer makes his move
+
+    fu2=0
+    fu3=0
+
+    print("dealer reveals his face down card:",fd)
+
+    if fu+fd<=16:
+        fu2=decka.pop(0)
+        print("dealer draws another card:",fu2)
+    
+    if fu+fd+fu2<=16:
+        fu3=decka.pop(0)
+        print("dealer draws again:",fu3)
+    
+    
+    dealer_total=fu+fd+fu2+fu3
+
+
+    print("dealer total is:",dealer_total)
+    
+    
+    
+    # win loss outcome
+
+    if (player_total>dealer_total and player_total<=21) or dealer_total>21:
+        print("player wins")
+    else:
+        print("dealer wins")
+    
+    
+    
+    #type play round to play a round
+    
+    play_round()
+    play_round()
+    play_round()
